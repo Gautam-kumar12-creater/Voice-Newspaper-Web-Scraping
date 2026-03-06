@@ -1,0 +1,7 @@
+newspaper3k
+gtts
+PyPDF2
+pyttsx3
+speechRecognition
+beautifulsoup4
+Pillow
