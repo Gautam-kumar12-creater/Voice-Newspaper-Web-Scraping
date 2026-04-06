@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voice Newspaper - News in Audio Format</title>
+    <title>Voice Newspaper - Malayalam News to Audio</title>
     <style>
         * {
             margin: 0;
@@ -13,345 +13,354 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
-        
-        header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 80px 20px;
-            text-align: center;
-        }
-        
-        header h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-        }
-        
-        header p {
-            font-size: 1.3em;
-            opacity: 0.9;
+            min-height: 100vh;
+            color: #333;
         }
         
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 20px;
         }
         
-        section {
-            margin: 50px 0;
+        header {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
         }
         
-        h2 {
+        header h1 {
+            color: #667eea;
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            color: #666;
+            font-size: 1.2em;
+        }
+        
+        .main-cta {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .main-cta h2 {
             color: #667eea;
             margin-bottom: 20px;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
-            font-size: 2em;
+            font-size: 1.8em;
         }
         
-        .feature-grid {
+        .button-group {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #667eea;
+        }
+        
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .info-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
             margin: 20px 0;
         }
         
-        .feature-card {
-            background: white;
-            border: 2px solid #667eea;
+        .step-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            border-radius: 10px;
+            text-align: center;
         }
         
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(102, 126, 234, 0.3);
-        }
-        
-        .feature-card h3 {
-            color: #667eea;
+        .step-card h4 {
+            font-size: 1.5em;
             margin-bottom: 10px;
         }
         
-        .languages {
+        .step-number {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            line-height: 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
             margin: 20px 0;
         }
         
-        .lang-badge {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+        .feature {
+            background: white;
             padding: 20px;
-            text-align: center;
             border-radius: 8px;
-            font-weight: bold;
-            font-size: 1.1em;
+            border-left: 4px solid #667eea;
         }
         
-        .download-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 14px 35px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin: 10px 5px;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        
-        .download-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3);
+        .feature h5 {
+            color: #667eea;
+            margin-bottom: 10px;
         }
         
         .code-block {
-            background: #f4f4f4;
-            border-left: 4px solid #667eea;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
             overflow-x: auto;
-        }
-        
-        .code-block code {
-            font-family: 'Courier New', monospace;
-            color: #333;
-        }
-        
-        .info-box {
-            background: #e8f0ff;
-            border-left: 4px solid #667eea;
-            padding: 15px;
             margin: 20px 0;
-            border-radius: 4px;
+            font-family: 'Courier New', monospace;
         }
         
         footer {
-            background: #333;
+            background: rgba(255, 255, 255, 0.1);
             color: white;
             text-align: center;
-            padding: 30px;
-            margin-top: 50px;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 40px;
         }
         
-        .emoji {
-            margin-right: 5px;
+        .link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
         }
         
-        ul, ol {
-            margin-left: 30px;
-            margin-top: 10px;
+        .link:hover {
+            text-decoration: underline;
         }
         
-        li {
-            margin: 8px 0;
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            
+            .button-group, .steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .step-card {
+                margin-bottom: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1><span class="emoji">📰</span>Voice Newspaper</h1>
-        <p>Read News in Your Language - Powered by AI Text-to-Speech</p>
-    </header>
-
     <div class="container">
-        <!-- About Section -->
-        <section>
-            <h2>About This Project</h2>
-            <p>Voice Newspaper is an innovative Python-based application designed specifically for <strong>visually impaired users</strong>. It extracts news content from websites and automatically converts it into natural-sounding audio using advanced Text-to-Speech technology.</p>
-            <div class="info-box">
-                <strong>Purpose:</strong> To make news and information accessible to everyone, regardless of visual ability.
-            </div>
-        </section>
-
-        <!-- Key Features -->
-        <section>
-            <h2>Key Features</h2>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h3>📰 Web Scraping</h3>
-                    <p>Automatically extract articles from news websites with intelligent content filtering</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🔊 Text-to-Speech</h3>
-                    <p>High-quality audio conversion using Google's TTS technology</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🌍 Multi-Language</h3>
-                    <p>Full support for English, Hindi, Tamil, and Malayalam</p>
-                </div>
-                <div class="feature-card">
-                    <h3>📄 PDF Support</h3>
-                    <p>Convert PDF documents to audio format</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🎤 Speech Recognition</h3>
-                    <p>Convert audio files back to text</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🎨 User-Friendly GUI</h3>
-                    <p>Easy-to-use Tkinter interface for all users</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Languages -->
-        <section>
-            <h2>Supported Languages</h2>
-            <div class="languages">
-                <div class="lang-badge">🇬🇧 English</div>
-                <div class="lang-badge">🇮🇳 Hindi</div>
-                <div class="lang-badge">🇮🇳 Tamil</div>
-                <div class="lang-badge">🇮🇳 Malayalam</div>
-            </div>
-        </section>
-
-        <!-- Installation -->
-        <section>
-            <h2>Quick Start Guide</h2>
+        <header>
+            <h1>📰 Voice Newspaper</h1>
+            <p>Read Malayalam News in Audio Format</p>
+        </header>
+        
+        <div class="main-cta">
+            <h2>Ready to Convert News to Audio?</h2>
+            <p style="margin-bottom: 20px;">Start using the Voice Newspaper application!</p>
             
-            <h3>Requirements:</h3>
-            <ul>
+            <div class="button-group">
+                <a href="http://localhost:5000" class="btn btn-primary" target="_blank">
+                    🚀 Open Web App (Local)
+                </a>
+                <a href="https://github.com/Gautam-kumar12-creater/Voice-Newspaper-Web-Scraping" class="btn btn-secondary" target="_blank">
+                    💻 View on GitHub
+                </a>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h3>🎯 Quick Start Options</h3>
+            <p style="margin-bottom: 20px;">Choose how you want to use Voice Newspaper:</p>
+            
+            <div class="steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4>Run Locally</h4>
+                    <p>Open on your computer right now!</p>
+                    <a href="http://localhost:5000" class="btn btn-secondary" style="margin-top: 10px;">Open Now</a>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4>Deploy Online</h4>
+                    <p>Share with anyone worldwide</p>
+                    <a href="#deployment" class="btn btn-secondary" style="margin-top: 10px;">See How</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h3>✨ Features</h3>
+            <div class="features">
+                <div class="feature">
+                    <h5>📱 Web Interface</h5>
+                    <p>Beautiful, easy-to-use interface in your browser</p>
+                </div>
+                <div class="feature">
+                    <h5>🔗 URL Extraction</h5>
+                    <p>Extract news from any Malayalam news website</p>
+                </div>
+                <div class="feature">
+                    <h5>✍️ Text Input</h5>
+                    <p>Paste any Malayalam text to convert</p>
+                </div>
+                <div class="feature">
+                    <h5>🔊 Audio Generation</h5>
+                    <p>Automatic text-to-speech conversion</p>
+                </div>
+                <div class="feature">
+                    <h5>▶️ Audio Player</h5>
+                    <p>Built-in browser player to listen</p>
+                </div>
+                <div class="feature">
+                    <h5>📥 Download</h5>
+                    <p>Save audio files to your computer</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-box" id="deployment">
+            <h3>🚀 Deploy Online (Make It Live on Internet)</h3>
+            <p style="margin-bottom: 20px;">Your application is ready to deploy! Choose a platform:</p>
+            
+            <div class="steps">
+                <div class="step-card">
+                    <h4>Render.com</h4>
+                    <p style="margin: 10px 0;">Recommended - FREE tier</p>
+                    <p style="font-size: 0.9em;">Auto-deploy from GitHub</p>
+                    <a href="https://render.com" class="btn btn-secondary" style="margin-top: 10px;" target="_blank">Go to Render</a>
+                </div>
+                
+                <div class="step-card">
+                    <h4>Railway.app</h4>
+                    <p style="margin: 10px 0;">Easy setup - FREE tier</p>
+                    <p style="font-size: 0.9em;">Perfect for Python apps</p>
+                    <a href="https://railway.app" class="btn btn-secondary" style="margin-top: 10px;" target="_blank">Go to Railway</a>
+                </div>
+            </div>
+            
+            <p style="margin-top: 20px; font-size: 0.95em;">
+                📖 <a href="https://github.com/Gautam-kumar12-creater/Voice-Newspaper-Web-Scraping/blob/main/DEPLOYMENT_ONLINE.md" class="link" target="_blank">Read Full Deployment Guide</a>
+            </p>
+        </div>
+        
+        <div class="info-box">
+            <h3>🔧 Installation & Setup</h3>
+            
+            <h4 style="color: #667eea; margin-top: 20px;">Requirements:</h4>
+            <ul style="margin-left: 20px; margin-top: 10px;">
                 <li>Python 3.7 or higher</li>
-                <li>pip (Python package manager)</li>
-                <li>Windows, Linux, or macOS</li>
-                <li>Internet connection</li>
+                <li>Internet connection (for news extraction & audio)</li>
+                <li>Modern web browser (Chrome, Firefox, Safari, Edge)</li>
             </ul>
-
-            <h3>Step 1: Clone the Repository</h3>
+            
+            <h4 style="color: #667eea; margin-top: 20px;">Run Locally:</h4>
             <div class="code-block">
-                <code>git clone https://github.com/Gautam-kumar12-creater/Voice-Newspaper-Web-Scraping.git<br>
-cd Voice-Newspaper-Web-Scraping</code>
+cd Voice-Newspaper-Web-Scraping<br>
+python -m pip install -r requirements.txt<br>
+python app.py
             </div>
-
-            <h3>Step 2: Install Dependencies</h3>
-            <div class="code-block">
-                <code>pip install -r requirements.txt</code>
-            </div>
-
-            <h3>Step 3: Run Your Preferred Language Version</h3>
-            <div class="code-block">
-                <code>
-                    # English<br>
-                    cd Audio_English && python gui.py<br>
-                    <br>
-                    # Hindi<br>
-                    cd Audio_Hindi && python gui.py<br>
-                    <br>
-                    # Tamil<br>
-                    cd Audio_Tamil && python gui.py<br>
-                    <br>
-                    # Malayalam<br>
-                    cd Audio_Malayalam && python gui.py
-                </code>
-            </div>
-        </section>
-
-        <!-- How to Use -->
-        <section>
-            <h2>How to Use</h2>
-            <ol>
-                <li><strong>Launch the Application</strong> - Run the gui.py file for your preferred language</li>
-                <li><strong>Choose Input Mode</strong> - Select "URL" (news website) or "Text" (manual input)</li>
-                <li><strong>Enter URL or Text</strong> - Paste a news link or type your text</li>
-                <li><strong>Click "View Result"</strong> - Extract and process the content</li>
-                <li><strong>Listen to Audio</strong> - Audio file plays automatically in your browser</li>
-                <li><strong>Enjoy!</strong> - Read along or listen hands-free</li>
-            </ol>
-        </section>
-
-        <!-- Tech Stack -->
-        <section>
-            <h2>Technology Stack</h2>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h3>Backend</h3>
-                    <p><strong>Python 3:</strong> Core programming language</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Web Scraping</h3>
-                    <p><strong>Newspaper3k</strong> & <strong>BeautifulSoup4</strong></p>
-                </div>
-                <div class="feature-card">
-                    <h3>Text-to-Speech</h3>
-                    <p><strong>gTTS</strong> (Google Text-to-Speech)</p>
-                </div>
-                <div class="feature-card">
-                    <h3>GUI Framework</h3>
-                    <p><strong>Tkinter</strong> - Built-in Python GUI</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Audio Processing</h3>
-                    <p><strong>PyPDF2</strong>, <strong>pyttsx3</strong></p>
-                </div>
-                <div class="feature-card">
-                    <h3>Speech Recognition</h3>
-                    <p><strong>SpeechRecognition</strong> library</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Downloads & Links -->
-        <section>
-            <h2>Downloads & Resources</h2>
-            <div style="text-align: center; margin: 30px 0;">
-                <a href="https://github.com/Gautam-kumar12-creater/Voice-Newspaper-Web-Scraping" class="download-btn" target="_blank">
-                    <span class="emoji">💻</span>View on GitHub
+            <p>Then open: <a href="http://localhost:5000" class="link">http://localhost:5000</a></p>
+        </div>
+        
+        <div class="info-box">
+            <h3>🌐 Supported News Websites</h3>
+            <p style="margin-bottom: 15px;">Extract news from popular Malayalam sources:</p>
+            <ul style="margin-left: 20px;">
+                <li>Manorama Online (manoramaonline.com)</li>
+                <li>Mathrubhumi (mathrubhumi.com)</li>
+                <li>Onmanorama (onmanorama.com)</li>
+                <li>AsiaNet News (asianetnews.tv)</li>
+                <li>Any other Malayalam news website</li>
+            </ul>
+        </div>
+        
+        <div class="info-box">
+            <h3>ℹ️ About This Project</h3>
+            <p>Voice Newspaper is designed to make news accessible to visually impaired users by converting text articles into natural-sounding audio.</p>
+            <p style="margin-top: 10px;"><strong>Created by:</strong> Suresh Kumar</p>
+            <p><strong>Organization:</strong> NIT Trichy, MCA Computer Science</p>
+            <p><strong>Mentor:</strong> Dr. S. Sangeetha</p>
+        </div>
+        
+        <div class="info-box">
+            <h3>📚 Resources</h3>
+            <div class="button-group">
+                <a href="https://github.com/Gautam-kumar12-creater/Voice-Newspaper-Web-Scraping" class="btn btn-primary" target="_blank">
+                    GitHub Repository
                 </a>
-                <a href="https://github.com/Gautam-kumar12-creater/Voice-Newspaper-Web-Scraping/releases" class="download-btn" target="_blank">
-                    <span class="emoji">📥</span>Download Latest Release
-                </a>
-                <a href="https://github.com/Gautam-kumar12-creater/Voice-Newspaper-Web-Scraping/blob/main/README.md" class="download-btn" target="_blank">
-                    <span class="emoji">📚</span>Full Documentation
+                <a href="https://github.com/Gautam-kumar12-creater/Voice-Newspaper-Web-Scraping/releases" class="btn btn-secondary" target="_blank">
+                    Download Release
                 </a>
             </div>
-        </section>
-
-        <!-- Developer Info -->
-        <section>
-            <h2>About the Developer</h2>
-            <div class="info-box">
-                <p><strong>Created by:</strong> Gautam Kumar</p>
-                <p><strong>Organization:</strong> CUSEK, MCA Computer Science Department</p>
-                <p><strong>Mentor:</strong> Dr Deepa Mam, Assistant Professor</p>
-                <p><strong>Contact:</strong> gautam123@gmail.com</p>
-            </div>
-        </section>
-
-        <!-- Project Stats -->
-        <section>
-            <h2>Project Stats</h2>
-            <div class="feature-grid">
-                <div class="feature-card" style="text-align: center;">
-                    <h3 style="font-size: 2em; color: #667eea;">4</h3>
-                    <p>Supported Languages</p>
-                </div>
-                <div class="feature-card" style="text-align: center;">
-                    <h3 style="font-size: 2em; color: #667eea;">100%</h3>
-                    <p>Open Source</p>
-                </div>
-                <div class="feature-card" style="text-align: center;">
-                    <h3 style="font-size: 2em; color: #667eea;">∞</h3>
-                    <p>Free to Use</p>
-                </div>
-            </div>
-        </section>
+        </div>
+        
+        <footer>
+            <p>Voice Newspaper Web Application</p>
+            <p style="margin-top: 10px; opacity: 0.8;">Made for visually impaired users • Open Source • Completely Free</p>
+        </footer>
     </div>
-
-    <footer>
-        <p>&copy; 2024-2026 Voice Newspaper Web Scraping System. All rights reserved.</p>
-        <p>Made with <strong>❤</strong> for visually impaired users worldwide</p>
-        <p><a href="https://github.com/Gautam-kumar12-creater/Voice-Newspaper-Web-Scraping" style="color: #667eea; text-decoration: none;">Visit GitHub Repository</a></p>
-    </footer>
 </body>
 </html>
