@@ -3,8 +3,17 @@ from tkinter import messagebox
 from tkinter import ttk
 from PIL import ImageTk, Image
 import os
+import webbrowser
 import newspapermodule
 #return_values={}
+
+def open_output_html():
+    """Open the output.html file in the default browser"""
+    try:
+        webbrowser.open('output.html')
+    except Exception as e:
+        messagebox.showerror("Error", f"Failed to open output.html: {e}")
+
 def combob():
     inputValue = box_value.get()
     newspapermodule.mainmodule(inputValue)
@@ -17,13 +26,36 @@ def browser():
 def contact():
    messagebox.showinfo("Contact Us", "      Suresh Kumar\nMobile:- 9470779814\nEmail-Id:- sureshkaum07896@gmail.com")
 def onclick2():
-    inputValue2=textbox.get("1.0","end-1c")
-    newspapermodule.mainmodule(inputValue2)
+    mode = mode_var.get()
+    inputValue2 = textbox.get("1.0", "end-1c").strip()
+    if mode == "text":
+        article_text = inputValue2
+    else:
+        article_text = newspapermodule.mainmodule3(inputValue2)
+    folder = os.path.basename(os.path.dirname(os.path.abspath(__file__)))
+    lang_map = {
+        "Audio_English": "en-US",
+        "Audio_Hindi": "hi-IN",
+        "Audio_Tamil": "ta-IN",
+        "Audio_Malayalam": "ml-IN"
+    }
+    language_code = lang_map.get(folder, "hi-IN")
+    newspapermodule.save_article_to_html(article_text, "output.html", language_code)
+    open_output_html()
+
 
 root = Tk()
 root.state('normal')
 root.title("Voice-Newspaper Web Scrapping System")
 root.configure(background = '#e1d8b9')
+
+# --- Mode selection (URL or Text) ---
+mode_var = StringVar(value="url")
+mode_frame = Frame(root, bg='#e1d8b9')
+mode_frame.pack(pady=10)
+Label(mode_frame, text="Choose Input Mode:", bg='#e1d8b9', font=("Arial", 12, "bold")).pack(side=LEFT, padx=5)
+Radiobutton(mode_frame, text="Read from URL", variable=mode_var, value="url", bg='#e1d8b9').pack(side=LEFT)
+Radiobutton(mode_frame, text="Read from Text", variable=mode_var, value="text", bg='#e1d8b9').pack(side=LEFT)
 
 #----------------------------------Frame Section------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------
@@ -36,7 +68,7 @@ thelabel6 = Label(topframe, compound=TOP)
 thelabel6.configure(background = '#e1d8b9')
 thelabel6.pack(anchor=N)
 
-img = ImageTk.PhotoImage(Image.open("Audio_Hindi/download.jpg"))
+img = ImageTk.PhotoImage(Image.open("download.jpg"))
 panel = Label(topframe, image = img, compound=LEFT)
 panel.configure(background = '#e1d8b9')
 panel.pack(side = "left", fill = "both", expand = "1")
