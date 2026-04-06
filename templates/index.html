@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Newspaper - Malayalam News to Audio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px 20px;
+        }
+        
+        .input-section {
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .input-mode {
+            margin-bottom: 20px;
+        }
+        
+        .input-mode label {
+            margin-right: 30px;
+            font-size: 1.05em;
+            cursor: pointer;
+        }
+        
+        .input-mode input[type="radio"] {
+            margin-right: 8px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            flex: 1;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-clear {
+            background: #ccc;
+            color: #333;
+            flex: 1;
+        }
+        
+        .btn-clear:hover {
+            background: #bbb;
+        }
+        
+        .result-section {
+            display: none;
+            margin-top: 30px;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+        }
+        
+        .result-section.show {
+            display: block;
+        }
+        
+        .result-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .result-item {
+            margin-bottom: 20px;
+        }
+        
+        .result-item strong {
+            display: block;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+        
+        .result-item p {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .audio-player {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        
+        .audio-player audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loading.show {
+            display: block;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error {
+            background: #fee;
+            border: 2px solid #fcc;
+            color: #c33;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .error.show {
+            display: block;
+        }
+        
+        .success {
+            background: #efe;
+            border: 2px solid #cfc;
+            color: #3c3;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .success.show {
+            display: block;
+        }
+        
+        .info-box {
+            background: #e8f0ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            color: #333;
+        }
+        
+        .news-websites {
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+        }
+        
+        .news-websites h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        
+        .news-websites select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .input-mode {
+                display: flex;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📰 Voice Newspaper</h1>
+            <p>Malayalam News to Audio Converter</p>
+        </header>
+        
+        <div class="content">
+            <!-- Input Section -->
+            <div class="input-section">
+                <h2 style="color: #667eea; margin-bottom: 20px;">Choose Input Mode:</h2>
+                
+                <div class="input-mode">
+                    <label>
+                        <input type="radio" name="inputType" value="url" checked> Read from URL (News Website)
+                    </label>
+                    <label>
+                        <input type="radio" name="inputType" value="text"> Read from Text (Manual Input)
+                    </label>
+                </div>
+                
+                <!-- URL Input -->
+                <div id="urlInput">
+                    <div class="info-box">
+                        Enter a Malayalam news website URL below
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>📎 Enter News URL:</label>
+                        <input type="url" id="urlField" placeholder="e.g., https://www.manoramaonline.com/" required>
+                    </div>
+                    
+                    <div class="news-websites">
+                        <h3>Popular Malayalam News Websites:</h3>
+                        <select id="presetSites">
+                            <option value="">-- Select a website or paste your own URL --</option>
+                            <option value="https://www.manoramaonline.com/">Manorama Online</option>
+                            <option value="https://www.mathrubhumi.com/">Mathrubhumi</option>
+                            <option value="https://www.onmanorama.com/">Onmanorama</option>
+                            <option value="https://www.asianetnews.tv/">AsiaNet News</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Text Input -->
+                <div id="textInput" style="display: none;">
+                    <div class="info-box">
+                        Enter or paste Malayalam text below
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>📝 Enter Text:</label>
+                        <textarea id="textField" placeholder="Paste your Malayalam text here..."></textarea>
+                    </div>
+                </div>
+                
+                <!-- Buttons -->
+                <div class="button-group">
+                    <button class="btn-submit" id="submitBtn">Check Result</button>
+                    <button class="btn-clear" id="clearBtn">Clear</button>
+                </div>
+                
+                <!-- Error/Success Messages -->
+                <div class="error" id="errorMsg"></div>
+                <div class="success" id="successMsg"></div>
+                
+                <!-- Loading Indicator -->
+                <div class="loading" id="loadingIndicator">
+                    <div class="spinner"></div>
+                    <p>Processing your request...</p>
+                </div>
+            </div>
+            
+            <!-- Result Section -->
+            <div class="result-section" id="resultSection">
+                <h2>📄 Extracted News</h2>
+                
+                <div class="result-item">
+                    <strong>Title:</strong>
+                    <p id="resultTitle"></p>
+                </div>
+                
+                <div class="result-item">
+                    <strong>Authors:</strong>
+                    <p id="resultAuthors"></p>
+                </div>
+                
+                <div class="result-item">
+                    <strong>Content:</strong>
+                    <p id="resultContent"></p>
+                </div>
+                
+                <div class="audio-player">
+                    <strong>🔊 Audio Player:</strong>
+                    <audio id="audioPlayer" controls>
+                        <source src="" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                
+                <button class="btn-submit" style="margin-top: 20px; width: 100%;" id="downloadBtn">
+                    Download Audio
+                </button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Voice Newspaper • Making News Accessible to Everyone</p>
+            <p style="font-size: 0.9em; margin-top: 5px;">Created for visually impaired users</p>
+        </footer>
+    </div>
+    
+    <script>
+        const inputTypeRadios = document.querySelectorAll('input[name="inputType"]');
+        const urlInput = document.getElementById('urlInput');
+        const textInput = document.getElementById('textInput');
+        const urlField = document.getElementById('urlField');
+        const textField = document.getElementById('textField');
+        const submitBtn = document.getElementById('submitBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const resultSection = document.getElementById('resultSection');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const errorMsg = document.getElementById('errorMsg');
+        const successMsg = document.getElementById('successMsg');
+        const presetSites = document.getElementById('presetSites');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const audioPlayer = document.getElementById('audioPlayer');
+        
+        // Toggle input mode
+        inputTypeRadios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.value === 'url') {
+                    urlInput.style.display = 'block';
+                    textInput.style.display = 'none';
+                } else {
+                    urlInput.style.display = 'none';
+                    textInput.style.display = 'block';
+                }
+                resultSection.classList.remove('show');
+            });
+        });
+        
+        // Preset sites selection
+        presetSites.addEventListener('change', (e) => {
+            if (e.target.value) {
+                urlField.value = e.target.value;
+            }
+        });
+        
+        // Clear button
+        clearBtn.addEventListener('click', () => {
+            urlField.value = '';
+            textField.value = '';
+            resultSection.classList.remove('show');
+            errorMsg.classList.remove('show');
+            successMsg.classList.remove('show');
+        });
+        
+        // Submit button
+        submitBtn.addEventListener('click', async () => {
+            const inputType = document.querySelector('input[name="inputType"]:checked').value;
+            const inputValue = inputType === 'url' ? urlField.value : textField.value;
+            
+            if (!inputValue.trim()) {
+                showError('Please enter ' + (inputType === 'url' ? 'a URL' : 'some text'));
+                return;
+            }
+            
+            submitBtn.disabled = true;
+            loadingIndicator.classList.add('show');
+            errorMsg.classList.remove('show');
+            successMsg.classList.remove('show');
+            
+            try {
+                const response = await fetch('/api/extract', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        type: inputType,
+                        value: inputValue
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to extract news');
+                }
+                
+                // Display results
+                document.getElementById('resultTitle').textContent = data.title || 'No title found';
+                document.getElementById('resultAuthors').textContent = data.authors || 'Unknown';
+                document.getElementById('resultContent').textContent = data.text || 'No content found';
+                
+                resultSection.classList.add('show');
+                showSuccess('News extracted successfully! Generating audio...');
+                
+                // Generate audio
+                await generateAudio(data.text);
+                
+            } catch (error) {
+                showError(error.message);
+                resultSection.classList.remove('show');
+            } finally {
+                submitBtn.disabled = false;
+                loadingIndicator.classList.remove('show');
+            }
+        });
+        
+        // Generate audio
+        async function generateAudio(text) {
+            try {
+                const response = await fetch('/api/generate-audio', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ text: text })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to generate audio');
+                }
+                
+                audioPlayer.src = data.audio_url;
+                downloadBtn.onclick = () => {
+                    const a = document.createElement('a');
+                    a.href = data.audio_url;
+                    a.download = 'news_audio.mp3';
+                    a.click();
+                };
+                
+                showSuccess('Audio generated successfully! Click play to listen.');
+                
+            } catch (error) {
+                showError('Audio generation failed: ' + error.message);
+            }
+        }
+        
+        // Helper functions
+        function showError(message) {
+            errorMsg.textContent = message;
+            errorMsg.classList.add('show');
+        }
+        
+        function showSuccess(message) {
+            successMsg.textContent = message;
+            successMsg.classList.add('show');
+        }
+    </script>
+</body>
+</html>
