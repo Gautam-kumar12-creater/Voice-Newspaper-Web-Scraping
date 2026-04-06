@@ -1,8 +1,8 @@
-# Voice Newspaper Web Scraping System for Visually Impaired Persons
+# Voice Newspaper Web Scraping System
 
 ## 📋 Overview
 
-A comprehensive Python-based system that extracts news content from websites and converts it into audio format, making newspapers accessible to visually impaired individuals. The system scrapes newspaper articles, removes unwanted content (ads, etc.), and converts the extracted text into speech in multiple languages.
+A comprehensive Python-based system that extracts news content from websites or user input and converts it into audio using browser-based Text-to-Speech (TTS). Designed for visually impaired users, it supports English, Hindi, Tamil, and Malayalam.
 
 ## ✨ Features
 
@@ -14,6 +14,8 @@ A comprehensive Python-based system that extracts news content from websites and
 - **Audio to Text**: Convert audio files back to text format
 - **Interactive GUI**: User-friendly Tkinter-based interface
 - **Browser Integration**: Automatic display of results in the default system browser
+- **Radio Button Feature**: Choose input mode (URL or Text)
+- **Play, Pause, Stop Controls**: Control playback in the browser
 
 ## 📁 Project Structure
 
@@ -22,14 +24,21 @@ Voice-Newspaper-Web-Scrapping-System-For-Visually-Impaired-Person-Python3-/
 ├── Audio_English/                 # English language module
 │   ├── gui.py                     # GUI interface
 │   ├── newspapermodule.py         # Web scraping & TTS logic
-│   ├── beautifulsoup.py           # HTML parsing utilities
-│   └── output.html                # Output file
+│   ├── script.js                  # JavaScript for browser TTS
+│   ├── style.css                  # CSS for GUI
+│   ├── output.html                # Output file
+│   └── ...
 ├── Audio_Hindi/                   # Hindi language module
 │   ├── gui.py
 │   ├── newspapermodule.py
 │   ├── beautifulsoup.py
 │   └── output.html
 ├── Audio_Tamil/                   # Tamil language module
+│   ├── gui.py
+│   ├── newspapermodule.py
+│   ├── beautifulsoup.py
+│   └── output.html
+├── Audio_Malayalam/               # Malayalam language module
 │   ├── gui.py
 │   ├── newspapermodule.py
 │   ├── beautifulsoup.py
@@ -103,6 +112,13 @@ cd Audio_Tamil
 python gui.py
 ```
 
+### Running the Malayalam Interface
+
+```bash
+cd Audio_Malayalam
+python gui.py
+```
+
 ### PDF to Audio Conversion
 
 ```bash
@@ -119,94 +135,62 @@ python audio_to_text.py
 
 ## 📖 How to Use
 
-### Web Scraping and Audio Conversion
+### 1. Run the GUI
 
-1. Launch the application by running `python gui.py` from your language folder
-2. Select or paste a newspaper article URL in the input field
-3. Confirm that you have selected the correct URL
-4. Click the **"VIEW RESULT"** button
-5. The article will open in your default browser
-6. The extracted text will automatically be converted to audio
-7. Listen to the audio output
+Go to your desired language folder (e.g., `Audio_English`):
+```bash
+cd Audio_English
+python gui.py
+```
 
-### PDF to Audio Conversion
+### 2. Choose Input Mode
 
-1. Run `python pdf_to_audio.py` from the `pdf_audio` folder
-2. Select a PDF file from the file dialog
-3. Click "Speak Text" to convert to audio
-4. Click "Stop" to stop the audio playback
+- **Read from URL**: Paste a news article URL in the textbox.
+- **Read from Text**: Type or paste any paragraph you want to hear.
 
-### Audio to Text Conversion
+### 3. Click the Main Button
 
-1. Run `python audio_to_text.py` from the `to_text` folder
-2. Provide the audio file name with extension when prompted
-3. The system will convert the audio to text using Google Speech Recognition
+- The browser will open and read the text aloud automatically.
+- Use Play, Pause, Stop buttons to control playback.
 
-## 🎯 Key Modules
+### 4. Automated Workflow Test
 
-### `newspapermodule.py`
-Handles article extraction and text-to-speech conversion. Main functions:
-- `mainmodule1(url)`: Extracts article title
-- `mainmodule2(url)`: Extracts author information
-- `mainmodule3(url)`: Extracts article text
-- `mainmodule(url)`: Main function that orchestrates the entire process
+To verify the full workflow (static text and URL):
+```bash
+python ../test_workflow.py
+```
+- This will test both static text and URL extraction, generate output.html, and open it in your browser.
 
-### `gui.py`
-Provides the Graphical User Interface using Tkinter with options for:
-- URL input
-- Viewing results
-- Help and information dialogs
-- Browser and contact information
+## 📂 Project Structure
 
-### `pdf_to_audio.py`
-Converts PDF documents to audio using:
-- PyPDF2 for PDF text extraction
-- Google Text-to-Speech or pyttsx3 for audio generation
+```
+Voice-Newspaper-Web-Scraping/
+├── Audio_English/
+│   ├── gui.py
+│   ├── newspapermodule.py
+│   ├── script.js
+│   ├── style.css
+│   ├── output.html
+│   └── ...
+├── Audio_Hindi/
+├── Audio_Tamil/
+├── Audio_Malayalam/
+├── test_workflow.py
+└── README.md
+```
 
-### `audio_to_text.py`
-Converts audio files to text using Google Speech Recognition API
+## How It Works
 
-## 🔧 Supported Browsers
+1. User selects input mode (URL or Text) in the GUI.
+2. Enters a URL or static text.
+3. System extracts or uses the text, generates output.html with TTS integration.
+4. Browser opens output.html and reads the article aloud.
 
-- Internet Explorer
-- Google Chrome
-- Mozilla Firefox
-- Safari
+## Credits
 
-## 👥 Contributing
+- Original project by Suresh Kumar (NIT Trichy)
+- TTS integration and modern UI by your team
 
-This project was originally developed by **Suresh Kumar** from NIT Trichy, MCA Computer Science Department, under the guidance of **Dr. S. Sangeetha**, Assistant Professor of Computer Applications.
+## Support
 
-## 📞 Contact
-
-**Developer**: Suresh Kumar
-- **Mobile**: 9470779814
-- **Email**: sureshkaum07896@gmail.com
-
-## 📝 License
-
-Please check with the original developers for licensing information.
-
-## 🤝 Purpose
-
-This software is designed to promote accessibility and independence for visually impaired individuals by providing an innovative solution to consume newspaper content through audio. It extracts genuine text content by removing unwanted elements like advertisements and focuses on delivering the core news content.
-
-## 🐛 Troubleshooting
-
-- **No audio output**: Ensure your system audio is working and the required TTS libraries are installed
-- **Web scraping fails**: Check internet connection and verify the article URL is valid
-- **PDF conversion issues**: Ensure the PDF file is not password-protected
-- **Speech recognition errors**: Check Google API access and microphone permissions
-
-## 🚀 Future Enhancements
-
-- Support for more languages
-- Desktop notification alerts for new articles
-- Bookmarking and saving favorite articles
-- Offline audio file storage
-- Integration with multiple news sources
-- Improved accessibility features
-
----
-
-**Note**: This project aims to make newspaper content accessible to visually impaired individuals. For any issues or suggestions, please contact the developers.
+For help, contact the project maintainer or open an issue.
